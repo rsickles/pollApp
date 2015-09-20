@@ -23,7 +23,7 @@ function doXMLHttpRequest() {
                 + responseObject.homework.length
                 + " assignments Received From Server!";
         document.getElementById("responseArea").innerHTML = displayText;
-
+        $('#responseArea').css("color", "red").show("slow");
         //now to fill table with data
         var table = document.getElementById('assignments');
         for (var i = 0; i<responseObject.homework.length; i++) {
@@ -39,14 +39,18 @@ function doXMLHttpRequest() {
 
                 table.appendChild(row);
                 }
-
+        $('#assignments').show();
 }
 
+// 5 jquery methods used, 2 used with chaining
 
 
     // JQUERY SCRIPT
 
   $(function() {  // do once original document loaded and ready
+        $('#grades').hide();
+        $('#assignments').hide();
+        $( '#message' ).fadeIn( "slow");
         $('#jquery').click(function() {
                 $.getJSON("DataTwo.json", function(responseObject, diditwork) {
                         console.log(diditwork);
@@ -65,7 +69,9 @@ function doXMLHttpRequest() {
                                 table.appendChild(row);
 
                                 }
+                                $('#grades').show();
 
+                                $('#message').css("color", "red").text("DO BETTER!");
                 } );  // getJSON
         } );  // click
   } ); // onReady
