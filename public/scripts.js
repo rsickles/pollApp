@@ -39,7 +39,9 @@ function doXMLHttpRequest() {
 
                 table.appendChild(row);
                 }
-        $('#assignments').slideUp('slow');
+        $('#assignments').show();
+        var info = "<h2></h2>";
+        $(info).appendTo(table).text("YOU HAVE A LOT OF WORK");
 }
 
 // 7 jquery methods used, 2 used with chaining
@@ -69,9 +71,12 @@ function doXMLHttpRequest() {
                                 table.appendChild(row);
 
                                 }
-                                $('#grades').slideDown('slow');
+                                $('#grades').show();
 
                                 $('#message').css("color", "red").text("DO BETTER!");
+                                var info = "<h2></h2>";
+                                $(info).appendTo(table).text("Grades are ok.");
+                                $(table).append(info).show();
                 } );  // getJSON
         } );  // click
   } ); // onReady
