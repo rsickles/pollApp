@@ -39,10 +39,10 @@ function doXMLHttpRequest() {
 
                 table.appendChild(row);
                 }
-        $('#assignments').show();
+        $('#assignments').slideUp();
 }
 
-// 5 jquery methods used, 2 used with chaining
+// 7 jquery methods used, 2 used with chaining
 
 
     // JQUERY SCRIPT
@@ -69,7 +69,7 @@ function doXMLHttpRequest() {
                                 table.appendChild(row);
 
                                 }
-                                $('#grades').show();
+                                $('#grades').slideDown();
 
                                 $('#message').css("color", "red").text("DO BETTER!");
                 } );  // getJSON
