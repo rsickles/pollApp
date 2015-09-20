@@ -42,7 +42,7 @@ function doXMLHttpRequest() {
         $('#assignments').show();
         var info = "<h2></h2>";
         $(info).appendTo(table).text("YOU HAVE A LOT OF WORK");
-         $( info ).attr( "color", "blue" );
+        $( 'td' ).attr( "BGCOLOR", "blue" );
 }
 
 
