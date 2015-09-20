@@ -1,7 +1,7 @@
 {
-homework: [
-{ className: "Math", assignment: "Do problem set."},
-{ className: "English", assignment: "Read 30 pages in book."},
-{ className: "Science", assignment: "Finish lab."}
+  "homework": [
+{ "className": "Math", "assignment": "Do problem set."},
+{ "className": "English", "assignment": "Read 30 pages in book."},
+{ "className": "Science", "assignment": "Finish lab."}
  ]
 }
