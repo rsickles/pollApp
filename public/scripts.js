@@ -50,7 +50,7 @@ function doXMLHttpRequest() {
   $(function() {  // do once original document loaded and ready
         $('#grades').hide();
         $('#assignments').hide();
-        $( '#message' ).fadeIn( "slow");
+        $('#message' ).fadeIn( "slow");
         $('#jquery').click(function() {
                 $.getJSON("DataTwo.json", function(responseObject, diditwork) {
                         console.log(diditwork);
