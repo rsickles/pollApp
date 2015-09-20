@@ -42,6 +42,7 @@ function doXMLHttpRequest() {
         $('#assignments').show();
         var info = "<h2></h2>";
         $(info).appendTo(table).text("YOU HAVE A LOT OF WORK");
+         $( info ).attr( "color", "blue" );
 }
 
 
@@ -49,7 +50,8 @@ function doXMLHttpRequest() {
 
   $(function() {  // do once original document loaded and ready
         $('#remove').click(function() {
-          $('html').find('message').remove();
+          $('html').find('#message').remove();
+          $('html').find('#responseArea').remove();
         });
         $('#grades').hide();
         $('#assignments').hide();
