@@ -12,7 +12,7 @@ function doXMLHttpRequest() {
     }
    }
   }
-  xhr.open("GET", "data.json", true);
+  xhr.open("GET", "data/data.json", true);
   xhr.send(null);
   }
 
