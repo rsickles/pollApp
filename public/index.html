@@ -6,13 +6,17 @@
   <script src="scripts.js"></script>
 </head>
 <body>
-<input type="button" id="js" value="Get Homework For Tommorow (JS)" onclick="doXMLHttpRequest()"> <br />
-<input type="button" id="jquery" value="Get Homework For Tommorow (JQuery)" onclick="doXMLHttpRequest()">
-<br />
-<div id="responseArea"></div><br /><br />
+<input type="button" id="js" value="Get Homework For Tommorow From Server(JS)" onclick="doXMLHttpRequest()"> <br />
+<input type="button" id="jquery" value="Get Class Grades(JQuery)" onclick="doXMLHttpRequest()">
+<br /><br />
+<div id="responseArea"></div><br />
 <table border="1" id="assignments">
 	<th> Class </th>
 	<th> Assignment </th>
+</table>
+<table border="1" id="grades">
+	<th> Class </th>
+	<th> Grade </th>
 </table>
 </body>
 </html>

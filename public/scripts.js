@@ -21,7 +21,7 @@ function doXMLHttpRequest() {
         var displayText =
                 "You have "
                 + responseObject.homework.length
-                + " assignments";
+                + " assignments Received From Server!";
         document.getElementById("responseArea").innerHTML = displayText;
 
         //now to fill table with data
@@ -39,4 +39,33 @@ function doXMLHttpRequest() {
 
                 table.appendChild(row);
                 }
+
 }
+
+
+
+    // JQUERY SCRIPT
+
+  $(function() {  // do once original document loaded and ready
+        $('#jquery').click(function() {
+                $.getJSON("DataTwo.json", function(responseObject, diditwork) {
+                        console.log(diditwork);
+                        var table = document.getElementById('grades');
+                        for (var i = 0; i<responseObject.grades.length; i++) {
+                                var object = responseObject.grades[i];
+                                var row = document.createElement("TR");
+
+                                var cell1 = row.insertCell(0);
+                                var cell2 = row.insertCell(1);
+
+                                // Add some text to the new cells:
+                                cell1.innerHTML = object.className;
+                                cell2.innerHTML = object.grade;
+
+                                table.appendChild(row);
+
+                                }
+
+                } );  // getJSON
+        } );  // click
+  } ); // onReady
