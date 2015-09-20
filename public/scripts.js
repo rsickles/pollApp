@@ -49,7 +49,7 @@ function doXMLHttpRequest() {
 
   $(function() {  // do once original document loaded and ready
         $('#remove').click(function() {
-          $('html').find('table').remove();
+          $('html').find('message').remove();
         });
         $('#grades').hide();
         $('#assignments').hide();
