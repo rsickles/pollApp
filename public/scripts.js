@@ -27,7 +27,7 @@ function doXMLHttpRequest() {
         //now to fill table with data
         var table = document.getElementById("assignments");
         for (var i = 0; i<responseObject.homework.length; i++) {
-                var row = document.createElement("<tr>");
+                var row = document.createElement("TR");
                 var homework = responseObject.employees[i];
                 var className = "<td>" + homework.className + "</td>";
                 var task = "<td>" + homework.assignment + "</td>";
