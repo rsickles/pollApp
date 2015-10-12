@@ -1,7 +1,0 @@
-{
-  "grades": [
-{ "className": "Math", "grade": "A"},
-{ "className": "English", "grade": "B"},
-{ "className": "Science", "grade": "C"}
- ]
-}
