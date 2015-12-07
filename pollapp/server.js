@@ -35,13 +35,8 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err);
 });
-if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
-  connection_string = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
-  process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
-  process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
-  process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
-  process.env.OPENSHIFT_APP_NAME;
-}
+ipaddress = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
+port = process.env.OPENSHIFT_NODEJS_PORT || 33333;
 // error handlers
 
 // development error handler
