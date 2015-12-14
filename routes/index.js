@@ -2,6 +2,8 @@ surveyModel = require('../models/surveyModel.js');
 //http://stackoverflow.com/questions/8233014/how-do-i-search-for-an-object-by-its-objectid-in-the-console
 //used to know to inculde this module from mongo
 var ObjectId = require('mongodb').ObjectId;
+//require the Twilio module and create a REST client
+var client = require('twilio')('AC17fc68004c479fdeefb62a3b40384440', 'daaad96e01835f9b216bf6da534c9c55');
 
 exports.init = function(app) {
 	app.get("/", getHomepage);
@@ -9,7 +11,34 @@ exports.init = function(app) {
   app.put("/survey", createSurvey);
   app.post("/survey/:survey_id", updateSurvey);
   app.delete("/survey/:survey_id", destroySurvey);
+  app.put("/survey/send/:number",sendSurveyText);
   };
+
+ //send survey to someone via text with Twilio
+ sendSurveyText = function(request,response){
+  var survey_url = request.body.survey_link;
+  var phone_number = request.params.number;
+  //Send an SMS text message
+      client.sendMessage({
+
+      to: phone_number, // Any number Twilio can deliver to
+      from: '+16178980748', // A number you bought from Twilio and can use for outbound communication
+      body: 'Take the survey at the below code!<br />' + survey_url // body of the SMS message
+
+      }, function(err, responseData) { //this function is executed when a response is received from Twilio
+
+      if (!err) { // "err" is an error received during the request, if any
+
+          // "responseData" is a JavaScript object containing data received from Twilio.
+          // A sample response from sending an SMS message is here (click "JSON" to see how the data appears in JavaScript):
+          // http://www.twilio.com/docs/api/rest/sending-sms#example-1
+
+          console.log(responseData.from); // outputs "+14506667788"
+          console.log(responseData.body); // outputs "word to your mother."
+
+      }
+      });
+ };
 // find a survey by its id or owner in mongo
 getSurvey = function(request, response) {
   if(request.params.survey_id!=undefined){
