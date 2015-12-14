@@ -79,8 +79,7 @@ createSurvey = function(request, response) {
       }
     }
   }
-  console.log(survey);
-	surveyModel.create("surveys", {survey}, function(err,status){
+	surveyModel.create("surveys",survey, function(err,status){
   	response.send(survey);
 	});
 };
