@@ -23,7 +23,7 @@ exports.init = function(app) {
 
       to: phone_number, // Any number Twilio can deliver to
       from: '+16178980748', // A number you bought from Twilio and can use for outbound communication
-      body: 'Take the survey at the below code!<br />' + survey_url // body of the SMS message
+      body: 'Take the survey at this URL!' + survey_url // body of the SMS message
 
       }, function(err, responseData) { //this function is executed when a response is received from Twilio
 

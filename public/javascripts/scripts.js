@@ -11,6 +11,10 @@
 		$("#username_entry").remove();
 		show_saved_surveys();
  	}
+ 	var socket = io.connect();
+ 	socket.on("reloadResults", function(){
+ 		show_saved_surveys();
+ 	});
 
 
  	//used when user wants to view all created surveys by him/herself
@@ -41,14 +45,17 @@
 			//append survey url to answer underneath
 			var survey_url = "http://localhost:50000/survey/" + result[x]["_id"];
 			var url_html = "<a id='survey_url' href=" + survey_url + ">" + survey_url + "</a>";
+
 			var $delete_button = $("<a class='btn-floating btn-small waves-effect waves-light red' id='delete_survey'><i class='material-icons'>delete</i></a><br /><br />");
 			var $message_button = $("<a class='btn-floating btn-small waves-effect waves-light red' id='message_survey'><i class='material-icons'>message</i></a><br /><br />");
+
+
 			var $message_number_label = $("<br/><label id='phone_number_label' style='display:none;' for='name'>Recipeient Phone Number:</label>");
 			var $message_number_field = $("<input id='phone_number' type='text' style='display:none;'>");
 			var $send_message_button = 	$("<a id='phone_number_send_button' style='display:none;' class='btn waves-effect waves-light btn-small' id='submit'>Send</a>");
 			$("#survey"+num_surveys).html("<h2>"+survey["name"]+"</h2>");
-			$("#survey"+num_surveys).append($delete_button);
 			$("#survey"+num_surveys).append($message_button);
+			$("#survey"+num_surveys).append($delete_button);
 			$("#survey"+num_surveys).append($message_number_label);
 			$("#survey"+num_surveys).append($message_number_field);
 			$("#survey"+num_surveys).append($send_message_button);

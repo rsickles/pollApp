@@ -64,6 +64,8 @@
 				    success: function(result) {
 				    	console.log("AJAX COMPLETE");
                         $('#modal1').openModal();
+                        //using ajax to update response page without needing to reload it
+                        socket.emit("didAnswerSurvey");
 				      }
 				    });
 		});
