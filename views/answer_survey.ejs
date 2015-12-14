@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Answer Survey</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<!-- Compiled and minified CSS -->
+  	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
+  	<!-- Compiled and minified JavaScript -->
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="/javascripts/take_survey.js"></script>
+  </head>
+  <textarea id="survey" style="display:none;"><%=JSON.stringify(survey)%></textarea>
+  <textarea id="survey_id" style="display:none;"><%=survey_id%></textarea>
+  <body>
+    <div class="container">
+      <div id="modal1" class="modal">
+          <div class="modal-content">
+            <h4>Survey Completed!</h4>
+            <p>Thank you for completing the survey :)</p>
+          </div>
+          <div class="modal-footer">
+            <a id="modal_confirm" class=" modal-action modal-close waves-effect waves-green btn-flat">Ok</a>
+          </div>
+        </div>
+      <div id="survey_name"></div>
+      <div id="viewers"></div>
+      <div class="row">
+        <form id="take_survey_form" class="col s12">
+        </form>
+        <a class="btn waves-effect waves-light btn-small" id="submit">Submit</a>
+      </div>
+    </div>
+  </body>
+</html>

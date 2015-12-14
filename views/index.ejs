@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<!-- Compiled and minified CSS -->
+  	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
+  	<!-- Compiled and minified JavaScript -->
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+		<script src="javascripts/scripts.js"></script>
+  </head>
+  <body>
+  	<div class="container">
+  		<div class="row">
+				<div id="modal1" class="modal">
+					<div class="modal-content">
+						<h4>Survey Created!</h4>
+						<p>Your survey has been created. Please check your saved surveys tab for all your surveys and to view survey data.</p>
+					</div>
+					<div class="modal-footer">
+						<a id="modal_confirm" class=" modal-action modal-close waves-effect waves-green btn-flat">Ok</a>
+					</div>
+				</div>
+  		</div>
+  		<div class="row">
+  			<div class="col s12"><span class="flow-text"><center>Welcome To PollApp</center></span></div>
+  			<div id="username_entry"><label for="name">Enter Your Username:</label><input id="user_name" type="text">
+  			<a class="btn waves-effect waves-light btn-small" id="add_name">Ok</a></div>
+  		</div>
+  		<div id="logged_in" style="display:none;">
+  		<div class="row">
+				<div class="col s12">
+					<ul class="tabs">
+						<li class="tab col s6"><a class="active" href="#createSurveyForm">Create Survey</a></li>
+						<li class="tab col s6"><a href="#savedform">Saved Surveys</a></li>
+					</ul>
+				</div>
+  		</div>
+  		<div class="row">
+  				<form id="createSurveyForm" class="col s12">
+						<div class="row">
+							<div class="input-field col s12">
+								<input id="name" type="text">
+								<label for="name">Name of Survey</label>
+							</div>
+						</div>
+						<div class="row">
+							<p>
+								<input name="surveytype" type="radio" id="test1" value="open"  />
+								<label for="test1">Open</label>
+							</p>
+							<p>
+								<input name="surveytype" type="radio" id="test2" value="mc" />
+								<label for="test2">Multiple Choice</label>
+							</p>
+					 </div>
+						<div class="row">
+							<div class="input-field col s12" style="display:none;" id="openQuestion">
+								<textarea id="textarea1" class="materialize-textarea"></textarea>
+								<label for="textarea1">Survey Question</label>
+							</div>
+						</div>
+						<div class="row" style="display:none;" id="mcQuestions">
+							<div id="AllQuestions"></div>
+								<a class="btn-floating btn-small waves-effect waves-light red" id="addResponse"><i class="material-icons">add</i></a><br /><br />
+								<a class="btn waves-effect waves-light btn-small" id="addQuestion">Add Question</a>
+								<a class="btn waves-effect waves-light btn-small" id="submit">Submit</a>
+						</div>
+					</form>
+  		</div>
+  		<div class="row">
+  			<div id="savedform">
+
+  			</div>
+  		</div>
+  	</div>
+   </div>
+</body>
+</html>
