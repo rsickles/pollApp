@@ -74,7 +74,10 @@ var sio =require('socket.io')(httpServer);
 // The server socket.io code is in the socketio directory.
 require('./models/surveyModel.js').init(sio);
 
-httpServer.listen(50000, function() {console.log('Listening on 50000');});
+var ipaddress = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
+var port      = process.env.OPENSHIFT_NODEJS_PORT || 50000;
+
+httpServer.listen(port, ipaddress, function() {console.log('Listening on '+ipaddress+':'+port);});
 
 
 module.exports = app;
