@@ -66,7 +66,7 @@
 					var str = $(this).siblings("a")[1].innerHTML;
 					//http://stackoverflow.com/questions/8376525/get-value-of-a-string-after-a-slash-in-javascript
 					var n = str.lastIndexOf('/');
-					var result = str.substring(n + 1);I
+					var result = str.substring(n + 1);
 					$(this).parent().remove();
 					$.ajax({
 					    url: 'survey/'+result,
