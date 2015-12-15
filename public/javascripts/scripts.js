@@ -10,7 +10,7 @@
 		$("#username_entry").remove();
 		show_saved_surveys();
  	}
- 	var socket = io.connect();
+ 	var socket = io.connect("http://nodejs-ryandomain.rhcloud.com:8000");
  	socket.on("reloadResults", function(){
  		show_saved_surveys();
  	});
