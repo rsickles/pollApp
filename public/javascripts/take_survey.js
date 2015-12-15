@@ -2,20 +2,18 @@
  	//in order to trigger the modal upon completion
         var socket = io.connect();
         socket.on('viewers', function (data) {
-            console.log("HEEEEEE MY NAME IS SICKLES");
             $("#viewers").html("<center>Number of people taking this survey now is: " + data.number + "</center>");
             // $("#savedform").text(data.number);
         });
  	$('.modal-trigger').leanModal();
     $("#modal_confirm").click(function(){
-            window.location.href = "http://localhost:50000";
+            window.location.href = "http://nodejs-ryandomain.rhcloud.com/";
     });
 	// http://stackoverflow.com/questions/23403096/how-to-pass-node-variable-to-external-javascript
 	// used to figure out how to send ejs variables to external js files
     var survey = $.parseJSON($('#survey').val());
     var num_questions = 1;
     var num_responses = 0;
-    console.log(survey);
     $("#survey_name").html("<h2><center>"+survey.name+"</center></h2>");
     if(survey.type == "mc"){
     	var question_name = "question" + num_questions;
@@ -69,14 +67,12 @@
             var ques_label = $("h3").text();
             response_json[ques_label]=response;
         }
-			console.log(response_json);
 			//now update survey with people who have taken it
 			$.ajax({
 				    url: '/survey/' + survey_id,
 				    type: 'POST',
 				    data: {'survey_data':response_json, 'survey_type':survey.type },
 				    success: function(result) {
-				    	console.log("AJAX COMPLETE");
                         $('#modal1').openModal();
                         //using ajax to update response page without needing to reload it
                         socket.emit("didAnswerSurvey");

@@ -6,7 +6,6 @@
  $(document).ready(function(){
 
  	if(sessionStorage.username !== undefined){
- 		console.log(sessionStorage.username);
  		$("#logged_in").css("display","block");
 		$("#username_entry").remove();
 		show_saved_surveys();
@@ -25,7 +24,6 @@
 				    data: {'owner':username},
 				    type: 'GET',
 				    success: function(result) {
-				    	console.log("AJAX COMPLETE");
 				      display_owner_surveys(result);
 				      }
 				    });
@@ -44,22 +42,42 @@
 			//append survey url to answer underneath
 
 			//create elements to add to DOM for viewing surveys
-			var survey_url = "http://localhost:50000/survey/" + result[x]["_id"];
+			var survey_url = "http://nodejs-ryandomain.rhcloud.com/survey/" + result[x]["_id"];
 			var url_html = "<a id='survey_url' href=" + survey_url + ">" + survey_url + "</a>";
-			var $delete_button = $("<a class='btn-floating btn-small waves-effect waves-light red' id='delete_survey'><i class='material-icons'>delete</i></a><br /><br />");
-			var $message_button = $("<a class='btn-floating btn-small waves-effect waves-light red' id='message_survey'><i class='material-icons'>message</i></a><br /><br />");
-			var $message_number_label = $("<br/><label id='phone_number_label' style='display:none;' for='name'>Recipeient Phone Number:</label>");
-			var $message_number_field = $("<input id='phone_number' type='text' style='display:none;'>");
-			var $send_message_button = 	$("<a id='phone_number_send_button' style='display:none;' class='btn waves-effect waves-light btn-small' id='submit'>Send</a>");
+			var $delete_button = $("<a class='btn-floating btn-small waves-effect waves-light red' id='delete_survey"+num_surveys+"'><i class='material-icons'>delete</i></a><br /><br />");
+			//var $message_button = $("<a class='btn-floating btn-small waves-effect waves-light red' id='message_survey"+num_surveys+"'><i class='material-icons'>message</i></a><br /><br />");
+
+
+			var $message_number_label = $("<br/><label id='phone_number_label"+num_surveys+"'  for='name'>Recipeient Phone Number:</label>");
+			var $message_number_field = $("<input id='phone_number"+num_surveys+"' type='text' >");
+			var $send_message_button  = $("<a id='phone_number_send_button"+num_surveys+"' class='btn waves-effect waves-light btn-small' id='submit'>Send</a><br /><br />");
 
 			//append these elements to the DOM
 			$("#survey"+num_surveys).html("<h2>"+survey["name"]+"</h2>");
-			$("#survey"+num_surveys).append($message_button);
+			//$("#survey"+num_surveys).append($message_button);
 			$("#survey"+num_surveys).append($delete_button);
 			$("#survey"+num_surveys).append($message_number_label);
 			$("#survey"+num_surveys).append($message_number_field);
 			$("#survey"+num_surveys).append($send_message_button);
 			$("#survey"+num_surveys).append(url_html);
+
+			//bind click event to delete surveys
+			$("#delete_survey"+num_surveys).bind("click", function(event){
+					var str = $(this).siblings("a")[1].innerHTML;
+					//http://stackoverflow.com/questions/8376525/get-value-of-a-string-after-a-slash-in-javascript
+					var n = str.lastIndexOf('/');
+					var result = str.substring(n + 1);I
+					$(this).parent().remove();
+					$.ajax({
+					    url: 'survey/'+result,
+					    type: 'DELETE',
+					    success: function(result) {
+					      }
+					    });
+			});
+			//end of binding to events
+
+
 			//survey div tag and name of survey have been added to the DOM
 			//now time to add questions and responses
 			if(survey["type"] == "mc"){
@@ -96,11 +114,9 @@
         }
         $("#survey"+num_surveys).append(question_title);
         var response_array = result[x][question_name];
-        console.log(response_array);
         var $list = $('<ol></ol>');
 				for (var i in response_array) {
 					var response = response_array[i];
-					console.log(response);
 					var $bullet = $("<li></li>").html(response);
 					$list.append($bullet);
 				}
@@ -109,48 +125,22 @@
  		}
  	};
 
- 	 	$(document.body).on("click", "a#delete_survey", function(){
- 	 		//http://stackoverflow.com/questions/8376525/get-value-of-a-string-after-a-slash-in-javascript
- 	 		var str = $(this).siblings("a")[1].innerHTML;
-			var n = str.lastIndexOf('/');
-			var result = str.substring(n + 1);
-    	console.log(result);
-    	$(this).parent().remove();
-    	$.ajax({
-				    url: 'survey/'+result,
-				    type: 'DELETE',
-				    success: function(result) {
-				    	console.log($(this).parent());
-				      }
-				    });
-		});
-		$(document.body).on("click", "a#message_survey", function(){
+ 	//  	$(document.body).on("click", "a#delete_survey", function(){
 
-    	if ($('#phone_number_label').css('display') == 'none')
-			{
-				$("#phone_number_label").css("display","block");
-    		$("#phone_number").css("display","block");
-    		$("#phone_number_send_button").css("display","block");
-			}else{
-				$("#phone_number_label").css("display","none");
-    		$("#phone_number").css("display","none");
-    		$("#phone_number_send_button").css("display","none");
-			}
+		// });
+		// $(document.body).on("click", "a#message_survey", function(){
 
-		});
+
+		// });
 
 		$(document.body).on("click", "a#phone_number_send_button", function(){
 			var number = $('#phone_number').val();
 			var survey_url = $(this).siblings("#survey_url").text();
-			console.log(number);
-			console.log(survey_url);
 			$.ajax({
 				    url: 'survey/send/'+number,
 				    type: 'PUT',
 				    data: {'survey_link' : survey_url},
 				    success: function(result) {
-				    	console.log("AJAX COMPLETE");
-				    	console.log(result);
 				      }
 				    });
 		});
@@ -198,7 +188,6 @@
 				$("#logged_in").css("display","block");
 				$("#username_entry").remove();
 				sessionStorage.username = username;
-				console.log(sessionStorage.username);
 				show_saved_surveys();
 			}
 		});
@@ -215,8 +204,6 @@
 				    type: 'PUT',
 				    data: {'survey' : new_survey},
 				    success: function(result) {
-				    	console.log("AJAX COMPLETE");
-				    	console.log(result);
 				      $('#modal1').openModal();
 				      new_survey = {};
 				      }
@@ -254,8 +241,6 @@
 				    type: 'PUT',
 				    data: {'survey' : new_survey},
 				    success: function(result) {
-				    	console.log("AJAX COMPLETE");
-				    	console.log(result);
 				    	new_survey = {};
 				      $('#modal1').openModal();
 				      }

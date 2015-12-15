@@ -15,6 +15,7 @@ exports.init = function(app) {
   };
 
  //send survey to someone via text with Twilio
+ //from twilio API docs
  sendSurveyText = function(request,response){
   var survey_url = request.body.survey_link;
   var phone_number = request.params.number;
@@ -28,13 +29,6 @@ exports.init = function(app) {
       }, function(err, responseData) { //this function is executed when a response is received from Twilio
 
       if (!err) { // "err" is an error received during the request, if any
-
-          // "responseData" is a JavaScript object containing data received from Twilio.
-          // A sample response from sending an SMS message is here (click "JSON" to see how the data appears in JavaScript):
-          // http://www.twilio.com/docs/api/rest/sending-sms#example-1
-
-          console.log(responseData.from); // outputs "+14506667788"
-          console.log(responseData.body); // outputs "word to your mother."
 
       }
       });
@@ -55,7 +49,6 @@ getSurvey = function(request, response) {
      var survey = docs[0].survey;
   	 response.render('answer_survey', { 'survey': survey, 'survey_id':request.params.survey_id});
     }else{
-      console.log(docs);
       response.send(docs);
     }
   	}
@@ -68,8 +61,6 @@ getSurvey = function(request, response) {
 updateSurvey = function(request, response) {
 	var survey_data = request.body.survey_data;
   var survey_type = request.body.survey_type;
-  console.log("HUUUU");
-  console.log(survey_data);
   var object_id = new ObjectId(request.params.survey_id);
   //turn increments in JSON back to integers
   if(survey_type !="open"){
@@ -105,8 +96,6 @@ destroySurvey = function(request, response) {
 createSurvey = function(request, response) {
   //var survey = request.body
 	var survey = request.body.survey;
-  console.log("HERE is the survey!");
-  console.log(survey);
   for (var key in survey) {
     if (survey.hasOwnProperty(key) && key.indexOf("question") != -1) {
       var new_json = survey[key];
@@ -128,8 +117,6 @@ createSurvey = function(request, response) {
       }
     }
   }
-  console.log("HERE is the survey!");
-  console.log(survey);
 	surveyModel.create("surveys",{"survey": survey}, function(err,status){
   	response.send(survey);
 	});
