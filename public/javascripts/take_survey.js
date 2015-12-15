@@ -1,10 +1,6 @@
  $(document).ready(function(){
  	//in order to trigger the modal upon completion
         var socket = io.connect("http://nodejs-ryandomain.rhcloud.com:8000");
-        socket.on('viewers', function (data) {
-            $("#viewers").html("<center>Number of people taking this survey now is: " + data.number + "</center>");
-            // $("#savedform").text(data.number);
-        });
  	$('.modal-trigger').leanModal();
     $("#modal_confirm").click(function(){
             window.location.href = "http://nodejs-ryandomain.rhcloud.com/";

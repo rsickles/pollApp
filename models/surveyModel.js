@@ -118,17 +118,9 @@ exports.update = function(collection, filter, update, callback) {
 
 exports.init = function(io) {
   // When a new connection is initiated
-  var currenViewers = 0; // keep track of the number of players looking at survey
   io.sockets.on('connection', function (socket) {
-    ++currenViewers;
     socket.on("didAnswerSurvey", function(){
       socket.broadcast.emit('reloadResults');
-    });
-    socket.emit('viewers', { number: currenViewers});
-    socket.broadcast.emit('viewers', { number: currenViewers});
-    socket.on('disconnect', function () {
-      --currenViewers;
-      socket.broadcast.emit('viewers', { number: currenViewers});
     });
   });
 }
