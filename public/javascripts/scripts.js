@@ -45,8 +45,6 @@
 			var survey_url = "http://nodejs-ryandomain.rhcloud.com/survey/" + result[x]["_id"];
 			var url_html = "<a id='survey_url' href=" + survey_url + ">" + survey_url + "</a>";
 			var $delete_button = $("<a class='btn-floating btn-small waves-effect waves-light red' id='delete_survey"+num_surveys+"'><i class='material-icons'>delete</i></a><br /><br />");
-			//var $message_button = $("<a class='btn-floating btn-small waves-effect waves-light red' id='message_survey"+num_surveys+"'><i class='material-icons'>message</i></a><br /><br />");
-
 
 			var $message_number_label = $("<br/><label id='phone_number_label"+num_surveys+"'  for='name'>Recipeient Phone Number:</label>");
 			var $message_number_field = $("<input id='phone_number"+num_surveys+"' type='text' >");
@@ -96,7 +94,6 @@
 				while(survey[question_name]!=undefined){
 					var question = survey[question_name];
 					var table = $('<table></table>').addClass("question"+num_questions);
-					//var new_question_div = "<br /><div id='question"+num_questions+"'></div>";
 					var question_label = "<h5>"+question["name"]+"</h5>";
 					$("#survey"+num_surveys).append(question_label);
 					//now get all responses for each question and add them to the DOM
