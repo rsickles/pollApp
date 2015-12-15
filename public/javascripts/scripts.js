@@ -37,22 +37,22 @@
  		for(var x=0; x<result.length; x++){
  			num_surveys++;
 			var survey = result[x].survey;
-			console.log(survey);
 			var num_questions = 1;
 			var num_responses = 0;
 			var new_survey_div = "<div id=survey" + num_surveys + "></div>";
 			$("#savedform").append(new_survey_div);
 			//append survey url to answer underneath
+
+			//create elements to add to DOM for viewing surveys
 			var survey_url = "http://localhost:50000/survey/" + result[x]["_id"];
 			var url_html = "<a id='survey_url' href=" + survey_url + ">" + survey_url + "</a>";
-
 			var $delete_button = $("<a class='btn-floating btn-small waves-effect waves-light red' id='delete_survey'><i class='material-icons'>delete</i></a><br /><br />");
 			var $message_button = $("<a class='btn-floating btn-small waves-effect waves-light red' id='message_survey'><i class='material-icons'>message</i></a><br /><br />");
-
-
 			var $message_number_label = $("<br/><label id='phone_number_label' style='display:none;' for='name'>Recipeient Phone Number:</label>");
 			var $message_number_field = $("<input id='phone_number' type='text' style='display:none;'>");
 			var $send_message_button = 	$("<a id='phone_number_send_button' style='display:none;' class='btn waves-effect waves-light btn-small' id='submit'>Send</a>");
+
+			//append these elements to the DOM
 			$("#survey"+num_surveys).html("<h2>"+survey["name"]+"</h2>");
 			$("#survey"+num_surveys).append($message_button);
 			$("#survey"+num_surveys).append($delete_button);
@@ -77,10 +77,6 @@
 							 num_responses++;
 							 var row = '<tr><td>' + key + '</td><td>' + val + '</td></tr>';
     					 table.append(row);
-							 // var label = "<label for='response"+num_responses+"'>"+ key +"</label>";
-							 // var checkbox = "<input type='radio' name='group" + num_questions + "' id='response" + num_responses + "' />";
-							 // $("#question"+num_questions).append(checkbox);
-							 // $("#question"+num_questions).append(label);
 						}
 					});
 				  $("#survey"+num_surveys).append(table);
@@ -88,6 +84,27 @@
 					num_questions++;
 					question_name = "question" + num_questions;
 				}
+			//else is a open response question
+			}else{
+				var question_title = "";
+				var question_name = "";
+				for (var key in survey) {
+            if (survey.hasOwnProperty(key) && key!="type" && key!="name" && key!="owner") {
+                question_title = $("<h5>"+key+"</h5>");
+                question_name = key;
+            }
+        }
+        $("#survey"+num_surveys).append(question_title);
+        var response_array = result[x][question_name];
+        console.log(response_array);
+        var $list = $('<ol></ol>');
+				for (var i in response_array) {
+					var response = response_array[i];
+					console.log(response);
+					var $bullet = $("<li></li>").html(response);
+					$list.append($bullet);
+				}
+				$("#survey"+num_surveys).append($list);
 			}
  		}
  	};
@@ -186,6 +203,26 @@
 			}
 		});
 
+		//used to send open response question to survey
+		$("#submitOpenQuestions").click(function(){
+			var question = $("#textarea1").val();
+			new_survey["type"] = "open";
+			new_survey["owner"] = sessionStorage.username+"";
+			new_survey["name"] = $("#createSurveyForm input")[0].value;
+			new_survey[question] = 0;
+			$.ajax({
+				    url: 'survey',
+				    type: 'PUT',
+				    data: {'survey' : new_survey},
+				    success: function(result) {
+				    	console.log("AJAX COMPLETE");
+				    	console.log(result);
+				      $('#modal1').openModal();
+				      new_survey = {};
+				      }
+				    });
+		});
+
 		//used to create JSON structure to send to create survey object
 		$("#submit").click(function(){
 			var number_of_inputs = $("#createSurveyForm input").length;
@@ -219,6 +256,7 @@
 				    success: function(result) {
 				    	console.log("AJAX COMPLETE");
 				    	console.log(result);
+				    	new_survey = {};
 				      $('#modal1').openModal();
 				      }
 				    });

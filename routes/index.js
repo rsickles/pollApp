@@ -67,8 +67,12 @@ getSurvey = function(request, response) {
 
 updateSurvey = function(request, response) {
 	var survey_data = request.body.survey_data;
+  var survey_type = request.body.survey_type;
+  console.log("HUUUU");
+  console.log(survey_data);
   var object_id = new ObjectId(request.params.survey_id);
   //turn increments in JSON back to integers
+  if(survey_type !="open"){
   for (var key in survey_data) {
     if (survey_data.hasOwnProperty(key)) {
       var data = survey_data[key];
@@ -76,11 +80,17 @@ updateSurvey = function(request, response) {
       survey_data[key] = data;
     }
   }
-  console.log(survey_data);
-  //create JSON parameter to update
-	surveyModel.update("surveys", { _id: object_id },{$inc: survey_data}, function(call){
-  	response.end(call);
-	});
+  //for mc questions
+  surveyModel.update("surveys", { _id: object_id },{$inc: survey_data}, function(call){
+    response.end(call);
+  });
+  }else{
+    //for open ended questions
+    surveyModel.update("surveys", { _id: object_id },{$push: survey_data}, function(call){
+    response.end(call);
+  });
+  }
+
 };
 
 // delete a survey by its name
@@ -95,6 +105,8 @@ destroySurvey = function(request, response) {
 createSurvey = function(request, response) {
   //var survey = request.body
 	var survey = request.body.survey;
+  console.log("HERE is the survey!");
+  console.log(survey);
   for (var key in survey) {
     if (survey.hasOwnProperty(key) && key.indexOf("question") != -1) {
       var new_json = survey[key];
@@ -108,6 +120,16 @@ createSurvey = function(request, response) {
       }
     }
   }
+  //hack since arrays cant be trasnmitted through http for some reason
+  if(survey["type"]=="open"){
+    for(var key in survey){
+      if(survey[key] == '0'){
+        survey[key] = [];
+      }
+    }
+  }
+  console.log("HERE is the survey!");
+  console.log(survey);
 	surveyModel.create("surveys",{"survey": survey}, function(err,status){
   	response.send(survey);
 	});

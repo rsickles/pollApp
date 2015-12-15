@@ -42,12 +42,21 @@
     	}
     }
     else{
-
+            //in order to find question
+        var $question_title = "";
+        for (var key in survey) {
+            if (survey.hasOwnProperty(key) && key!="type" && key!="name" && key!="owner") {
+                $question_title = $("<h3>"+key+"</h3>");
+            }
+        }
+        var $open_ended_response = $("<input id='open_repsonse' type='text'>");
+        $("#take_survey_form").append($question_title).append($open_ended_response);
     }
     $("#submit").click(function(){
     	var survey_id = $('#survey_id').val();
+        var response_json = {};
+        if(survey.type == "mc"){
     	//http://stackoverflow.com/questions/8382156/getting-all-the-checked-checkboxes-in-a-form
-    	var response_json = {};
 			$("#take_survey_form input:radio:checked").each(function() {
     			var question_number = $(this).parent().attr("id");
     			var question_value = $(this).next().html();
@@ -55,12 +64,17 @@
     			var question_response = "survey." + question_number + "." + question_value;
     			response_json[question_response]=1;
 			});
+        }else{
+            var response = $("#open_repsonse").val();
+            var ques_label = $("h3").text();
+            response_json[ques_label]=response;
+        }
 			console.log(response_json);
 			//now update survey with people who have taken it
 			$.ajax({
 				    url: '/survey/' + survey_id,
 				    type: 'POST',
-				    data: {'survey_data':response_json },
+				    data: {'survey_data':response_json, 'survey_type':survey.type },
 				    success: function(result) {
 				    	console.log("AJAX COMPLETE");
                         $('#modal1').openModal();
