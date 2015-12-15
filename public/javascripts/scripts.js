@@ -75,6 +75,17 @@
 					      }
 					    });
 			});
+			$("a#phone_number_send_button"+num_surveys).bind("click",function(){
+			var number = $('#phone_number'+num_surveys).val();
+			var survey_url = $(this).siblings("#survey_url").text();
+			$.ajax({
+				    url: 'survey/send/'+number,
+				    type: 'PUT',
+				    data: {'survey_link' : survey_url},
+				    success: function(result) {
+				      }
+				    });
+			});
 			//end of binding to events
 
 
@@ -125,25 +136,6 @@
  		}
  	};
 
- 	//  	$(document.body).on("click", "a#delete_survey", function(){
-
-		// });
-		// $(document.body).on("click", "a#message_survey", function(){
-
-
-		// });
-
-		$(document.body).on("click", "a#phone_number_send_button", function(){
-			var number = $('#phone_number').val();
-			var survey_url = $(this).siblings("#survey_url").text();
-			$.ajax({
-				    url: 'survey/send/'+number,
-				    type: 'PUT',
-				    data: {'survey_link' : survey_url},
-				    success: function(result) {
-				      }
-				    });
-		});
  	//logic for selecting open or multiple choice questions
  	$('#createSurveyForm input').on('change', function() {
    survey_type = $('input[name=surveytype]:checked', '#createSurveyForm').val();
